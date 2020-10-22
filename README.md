@@ -1,5 +1,5 @@
 # JaJaLand Frontend
-The frontend of JaJaLand 
+The frontend of JaJaLand
 
 ## Development
 React.js will be used.
