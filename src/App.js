@@ -5,13 +5,13 @@ import {theme} from './theme';
 import {Home} from './pages/home';
 export const App = () => {
 	return (
-    <ThemeProvider theme={theme}>
+		<ThemeProvider theme={theme}>
 			<Router>
-					<Switch>
-						<Redirect exact from="/" to="/home" />
-						<Route exact path="/home" component={Home} />
-					</Switch>
+				<Switch>
+					<Redirect exact from="/" to="/home" />
+					<Route exact path="/home" component={Home} />
+				</Switch>
 			</Router>
-    </ThemeProvider>
+		</ThemeProvider>
 	);
 };
