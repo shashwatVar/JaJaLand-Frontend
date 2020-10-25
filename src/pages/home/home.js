@@ -1,5 +1,5 @@
-import React, {useEffect} from 'react';
-import {initiateSocket} from /*disconnectSocket*/ '../../sockets/sockets';
+import React, {useEffect, useState} from 'react';
+import {initiateSocket, createRoomSocket, joinRoomSocket} from /*disconnectSocket*/ '../../sockets/sockets';
 import {Button, CssBaseline, TextField, Grid, Box, Divider, Container} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 
@@ -23,17 +23,25 @@ const useStyles = makeStyles((theme) => ({
 	gap: {
 		margin: theme.spacing(2, 0, 2),
 	},
-	input_label: {
-		color: 'whitesmoke',
-	},
 }));
 
 export const Home = () => {
 	const classes = useStyles();
+	const [name, setName] = useState('');
+	const [room, setRoom] = useState('');
 
 	useEffect(() => {
 		initiateSocket();
 	}, []);
+
+	const createRoom = () => {
+		let d = new Date();
+		createRoomSocket({PlayerName: name, RoomId: d.getTime().toString()});
+	};
+
+	const joinRoom = () => {
+		joinRoomSocket({PlayerName: name, RoomId: room});
+	};
 
 	return (
 		<Container component="main">
@@ -45,9 +53,22 @@ export const Home = () => {
 					</AnimatedText>
 				</Grid>
 
-				<Box className={classes.paper} boxShadow={3} bgcolor="rgb(60, 60, 60)">
+				<Box className={classes.paper} boxShadow={3} bgcolor="rgba(255, 255, 255, 0.67)">
 					<Grid container spacing={1} direction="column" alignItems="center" justify="center">
+						<TextField
+							onChange={(e) => {
+								setName(e.target.value);
+							}}
+							label="Enter Your Name"
+							id="filled-margin-normal"
+							margin="normal"
+							variant="filled"
+							color="primary"
+							size="small"
+						/>
+						<Divider />
 						<Button
+							onClick={createRoom}
 							size="medium"
 							type="submit"
 							variant="contained"
@@ -60,6 +81,9 @@ export const Home = () => {
 						<Divider />
 
 						<TextField
+							onChange={(e) => {
+								setRoom(e.target.value);
+							}}
 							label="Room Id"
 							id="filled-margin-normal"
 							defaultValue="Enter Room Id"
@@ -69,6 +93,7 @@ export const Home = () => {
 							color="secondary"
 						/>
 						<Button
+							onClick={joinRoom}
 							size="medium"
 							type="submit"
 							variant="contained"

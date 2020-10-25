@@ -2,7 +2,7 @@ import {createMuiTheme} from '@material-ui/core/styles';
 
 export const theme = createMuiTheme({
 	palette: {
-		type: 'dark',
+		type: 'light',
 		background: {
 			default: '#282727',
 		},
@@ -15,17 +15,8 @@ export const theme = createMuiTheme({
 			main: '#03A9F4',
 		},
 		text: {
-			primary: '#ffffff',
-			secondary: 'rgba(0, 0, 0, 0.85)',
-		},
-		overrides: {
-			MuiCssBaseline: {
-				'@global': {
-					body: {
-						backgroundImage: 'url(https://designshack.net/wp-content/uploads/gradient-background.jpg)',
-					},
-				},
-			},
+			primary: 'rgba(0,0,0,0.85)',
+			secondary: 'white',
 		},
 	},
 	typography: {
