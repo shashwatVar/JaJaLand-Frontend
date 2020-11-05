@@ -12,6 +12,7 @@ import {
 	ListItemText,
 } from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
+import {useHistory} from 'react-router-dom';
 
 import {AnimatedText} from '../../assets/style/AnimatedText';
 import {toast} from 'react-toastify';
@@ -54,10 +55,20 @@ export const Home = (props) => {
 	const [activeRoom, setActiveRoom] = useState([]);
 	const [myRoom, setMyRoom] = useState([]);
 	const [render, setRender] = useState('home');
+	const [rating, setRating] = useState(0);
+	let history = useHistory();
 
 	useEffect(() => {
 		props.socket.on('ActiveRooms', (data) => {
 			setActiveRoom(data);
+		});
+		props.socket.on('MyRoom', (data) => {
+			if (data.players.length >= 2) {
+				history.push({
+					pathname: '/game',
+					state: {myRoom: data},
+				});
+			}
 		});
 	});
 
@@ -69,7 +80,7 @@ export const Home = (props) => {
 				props.socket.on('playerJoined', (data) => toast.dark(data, notify_object));
 			}
 			props.socket.on('MyRoom', (data) => {
-				setMyRoom(data);
+				setMyRoom(data.players);
 			});
 			props.socket.on('ActiveRooms', (data) => {
 				setActiveRoom(data);
@@ -88,7 +99,7 @@ export const Home = (props) => {
 					props.socket.on('playerJoined', (data) => toast.dark(data, notify_object));
 				}
 				props.socket.on('MyRoom', (data) => {
-					setMyRoom(data);
+					setMyRoom(data.players);
 				});
 				props.socket.on('ActiveRooms', (data) => {
 					setActiveRoom(data);
@@ -100,6 +111,10 @@ export const Home = (props) => {
 		} else {
 			toast.dark('please enter a name', notify_object);
 		}
+	};
+
+	const ratingChanged = (newRating) => {
+		console.log(newRating);
 	};
 
 	return (

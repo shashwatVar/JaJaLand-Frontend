@@ -5,6 +5,7 @@ import io from 'socket.io-client';
 import {ToastContainer} from 'react-toastify';
 import {theme} from './theme';
 import {Home} from './pages/home';
+import {Game} from './pages/game';
 import {SOCKET_URL} from './config';
 
 let socket;
@@ -31,6 +32,7 @@ export const App = () => {
 				<Router>
 					<Switch>
 						<Route exact path="/" component={() => <Home socket={socket} />} />
+						<Route exact path="/game" component={() => <Game socket={socket} />} />
 					</Switch>
 				</Router>
 			) : null}
